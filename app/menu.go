@@ -3,12 +3,13 @@ package app
 import (
 	"fyne.io/fyne"
 	"fyne.io/fyne/dialog"
+	fdialog "github.com/sqweek/dialog"
 )
 
 func (app *Application) buildMenu() {
 	return fyne.NewMainMenu(
 		fyne.NewMenu("File",
-			fyne.NewMenuItem("Open", func() {}),
+			fyne.NewMenuItem("Open", handleOpen),
 			fyne.NewMenuItem("Remove current", func() {}),
 		),
 		fyne.NewMenu("Edit",
@@ -23,11 +24,19 @@ func (app *Application) buildMenu() {
 	)
 }
 
+func (app *Application) handleOpen() {
+	file, err := fdialog.File().Load()
+	if err != nil {
+		return
+	}
+	app.currentFile = file
+}
+
 func handleAbout() {
 	dialog.ShowInformation("About", `
-		Keeper is a program that keeps your files protected from a third party 
-		by encrypting its content with strong encryption scheme.
+		Keeper is a program that keeps your files protected from a third party by 
+		encrypting its content with strong encryption scheme.
 
-		Copyright 2020
+		Copyright (c) 2020 Ekene Izukanne
 	`)
 }
