@@ -5,6 +5,6 @@ import (
 )
 
 func main() {
-	app.Load()
-	app.window.ShowAndRun()
+	app := app.Load()
+	app.Window().ShowAndRun()
 }

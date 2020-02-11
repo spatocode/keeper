@@ -13,6 +13,10 @@ type Application struct {
 	currentFile		string
 }
 
+func (app *Application) Window() {
+	return window
+}
+
 // Load initialize the Application
 func Load() *Application {
 	app := app.NewWithID("Keeper-OSS")
