@@ -13,7 +13,7 @@ type Application struct {
 	currentFile		string
 }
 
-func (app *Application) Window() {
+func (app *Application) Window() fyne.Window {
 	return window
 }
 
