@@ -5,6 +5,7 @@ import (
 	"fyne.io/fyne/app"
 )
 
+// Application contains information about the Keeper app
 type Application struct {
 	window			fyne.Window
 	menu			*fyne.MainMenu
@@ -12,16 +13,20 @@ type Application struct {
 	currentFile		string
 }
 
+// Load initialize the Application
 func Load() *Application {
-	a := app.NewWithID("Keeper-OSS")
-	win := a.NewWindow("Keeper")
+	app := app.NewWithID("Keeper-OSS")
+	win := app.NewWindow("Keeper")
+	win.Resize(fyne.NewSize(800, 500))
+	win.SetFixedSize(true)
 
-	appl := &App{window: win}
-	appl.menu = app.buildMenu()
-	appl.currentFile = "No file selected"
+	a := &Application{window: win}
+	a.menu = a.buildMenu()
+	a.currentFile = "No file selected"
 
-	win.SetMaster(appl.content())
-	win.SetMainMenu(mainMenu)
+	win.SetMaster()
+	win.SetMainMenu(a.menu)
 
-	win.SetContent()
+	win.SetContent(a.content())
+	return a
 }
