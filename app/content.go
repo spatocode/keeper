@@ -1,10 +1,16 @@
 package app
 
 import (
+	"fmt"
+	//"os"
+
 	"fyne.io/fyne"
 	"fyne.io/fyne/layout"
 	"fyne.io/fyne/widget"
 	"fyne.io/fyne/theme"
+	"fyne.io/fyne/dialog"
+	"github.com/spatocode/keeper/encryptor"
+	"github.com/spatocode/keeper/decryptor"
 	_"github.com/spatocode/keeper/icons"
 )
 
@@ -16,9 +22,9 @@ func (app *Application) content() fyne.CanvasObject {
 		),
 		widget.NewGroup(app.currentFile,
 			fyne.NewContainerWithLayout(layout.NewGridLayout(3),
-				widget.NewButtonWithIcon("Encrypt", theme.ConfirmIcon(), func() {}),
-				widget.NewButtonWithIcon("Property", theme.ContentCutIcon(), func() {}),
-				widget.NewButtonWithIcon("Decrypt", theme.CancelIcon(), func() {}),
+				widget.NewButtonWithIcon("Encrypt", theme.ConfirmIcon(), app.handleEncryption),
+				widget.NewButtonWithIcon("Property", theme.ContentCutIcon(), app.handleFileProperty),
+				widget.NewButtonWithIcon("Decrypt", theme.CancelIcon(), app.handleDecryption),
 			),
 		),
 	)
@@ -43,4 +49,31 @@ func (app *Application) buildEncryptedTab() fyne.Widget {
 		return widget.NewLabelWithStyle("No files encrypted yet", fyne.TextAlignCenter, fyne.TextStyle{Bold:true})
 	}
 	return nil // TODO: Return list of encrypted files with details
+}
+
+func (app *Application) handleDecryption() {
+	for _, file := range app.encryptedFiles {
+		if app.currentFile == file {
+			password := widget.NewPasswordEntry()
+			dialog.ShowCustomConfirm("Enter password", "Done", "Cancel", password, func(done bool) {
+				if done {
+					decryptor.Decrypt(app.currentFile, password.Text)
+				}
+			}, app.window)
+		}
+	}
+}
+
+func (app *Application) handleEncryption() {
+	if app.currentFile != "No file selected" {
+		password := widget.NewPasswordEntry()
+		dialog.ShowCustomConfirm("Enter password", "Done", "Cancel", password, func(done bool) {
+			if done {
+				encryptor.Encrypt(app.currentFile, password.Text)
+			}
+		}, app.window)
+	}
+}
+
+func (app *Application) handleFileProperty() {
 }
