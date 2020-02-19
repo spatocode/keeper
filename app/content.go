@@ -1,9 +1,6 @@
 package app
 
 import (
-	"fmt"
-	//"os"
-
 	"fyne.io/fyne"
 	"fyne.io/fyne/layout"
 	"fyne.io/fyne/widget"
