@@ -38,6 +38,9 @@ func (app *Application) buildCurrentTab() fyne.Widget {
 	)
 }
 
-func (app *Application) buildEncryptedTab() fyne.Widget{
-	return widget.NewLabelWithStyle(app.currentFile, fyne.TextAlignCenter, fyne.TextStyle{Bold:true})
+func (app *Application) buildEncryptedTab() fyne.Widget {
+	if app.encryptedFiles == nil {
+		return widget.NewLabelWithStyle("No files encrypted yet", fyne.TextAlignCenter, fyne.TextStyle{Bold:true})
+	}
+	return nil // TODO: Return list of encrypted files with details
 }

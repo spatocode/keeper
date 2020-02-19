@@ -6,10 +6,18 @@ import (
 	fdialog "github.com/sqweek/dialog"
 )
 
-func (app *Application) buildMenu() {
+var aboutInfo = `
+Keeper is a program that keeps your files protected 
+from a third party access by encrypting its content 
+with strong encryption scheme.
+
+Copyright (c) 2020 Ekene Izukanne
+`
+
+func (app *Application) buildMenu() *fyne.MainMenu {
 	return fyne.NewMainMenu(
 		fyne.NewMenu("File",
-			fyne.NewMenuItem("Open", handleOpen),
+			fyne.NewMenuItem("Open", app.handleOpen),
 			fyne.NewMenuItem("Remove current", func() {}),
 		),
 		fyne.NewMenu("Edit",
@@ -18,9 +26,9 @@ func (app *Application) buildMenu() {
 			fyne.NewMenuItem("Preference", func() {}),
 		),
 		fyne.NewMenu("Help",
-			fyne.NewMenuItem("About", handleAbout),
 			fyne.NewMenuItem("Check for updates", func() {}),
-		)
+			fyne.NewMenuItem("About", app.handleAbout),
+		),
 	)
 }
 
@@ -32,11 +40,6 @@ func (app *Application) handleOpen() {
 	app.currentFile = file
 }
 
-func handleAbout() {
-	dialog.ShowInformation("About", `
-		Keeper is a program that keeps your files protected from a third party by 
-		encrypting its content with strong encryption scheme.
-
-		Copyright (c) 2020 Ekene Izukanne
-	`)
+func (app *Application) handleAbout() {
+	dialog.ShowInformation("About", aboutInfo, app.window)
 }
