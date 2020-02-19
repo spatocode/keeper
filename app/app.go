@@ -13,15 +13,16 @@ type Application struct {
 	currentFile		string
 }
 
+// Window returns the application window instance
 func (app *Application) Window() fyne.Window {
-	return window
+	return app.window
 }
 
 // Load initialize the Application
 func Load() *Application {
 	app := app.NewWithID("Keeper-OSS")
 	win := app.NewWindow("Keeper")
-	win.Resize(fyne.NewSize(800, 500))
+	win.Resize(fyne.NewSize(600, 350))
 	win.SetFixedSize(true)
 
 	a := &Application{window: win}
