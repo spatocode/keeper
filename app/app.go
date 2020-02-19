@@ -3,6 +3,7 @@ package app
 import (
 	"fyne.io/fyne"
 	"fyne.io/fyne/app"
+	"fyne.io/fyne/theme"
 )
 
 // Application contains information about the Keeper app
@@ -21,9 +22,12 @@ func (app *Application) Window() fyne.Window {
 // Load initialize the Application
 func Load() *Application {
 	app := app.NewWithID("Keeper-OSS")
+	app.Settings().SetTheme(theme.LightTheme())
+	
 	win := app.NewWindow("Keeper")
 	win.Resize(fyne.NewSize(600, 350))
 	win.SetFixedSize(true)
+	win.CenterOnScreen()
 
 	a := &Application{window: win}
 	a.menu = a.buildMenu()
