@@ -1,6 +1,8 @@
 package app
 
 import (
+	"errors"
+
 	"fyne.io/fyne"
 	"fyne.io/fyne/layout"
 	"fyne.io/fyne/widget"
@@ -66,7 +68,11 @@ func (app *Application) handleEncryption() {
 		password := widget.NewPasswordEntry()
 		dialog.ShowCustomConfirm("Enter password", "Done", "Cancel", password, func(done bool) {
 			if done {
-				encryptor.Encrypt(app.currentFile, password.Text)
+				err := encryptor.Encrypt(app.currentFile, password.Text)
+				if err != nil {
+					err = errors.New("An error occured while encrypting file.")
+					dialog.ShowError(err, app.window)
+				}
 			}
 		}, app.window)
 	}
