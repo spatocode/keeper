@@ -1,4 +1,4 @@
-package sdecryptor
+package decryptor
 
 import (
 	"log"
@@ -16,7 +16,7 @@ func createCipher(key []byte) cipher.Block{
 	return ciph
 }
 
-func Decrypt(data []byte, key []byte) []byte{
+func AES(data []byte, key []byte) []byte{
     blockCipher := createCipher(key)
     stream := cipher.NewCTR(blockCipher, IV)
     stream.XORKeyStream(data, data)

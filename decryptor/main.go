@@ -1,5 +1,5 @@
-package main
-
+package decryptor
+/*
 import (
 	"strings"
 	"encoding/base64"
@@ -109,4 +109,4 @@ func main() {
 	if err = s.Err(); err != nil {
 		log.Fatal(err)
 	}
-}
+}*/

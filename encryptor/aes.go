@@ -1,4 +1,4 @@
-package sencryptor
+package encryptor
 
 import (
 	"crypto/aes"
@@ -16,7 +16,7 @@ func createCipher(key []byte) cipher.Block{
 	return ciph
 }
 
-func Encrypt(file []byte, key []byte) []byte{
+func AES(file []byte, key []byte) []byte{
 	blockCipher := createCipher(key)
 	stream := cipher.NewCTR(blockCipher, IV)
 	stream.XORKeyStream(file, file)

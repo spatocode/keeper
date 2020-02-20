@@ -1,4 +1,4 @@
-package asencryptor
+package encryptor
 
 import (
 	"crypto/rsa"
@@ -11,7 +11,7 @@ import (
 	"io/ioutil"
 )
 
-func Encrypt(data string, path string) []byte{
+func RSA(data string, path string) []byte{
 	publicPemKey := 	`
 -----BEGIN RSA PUBLIC KEY-----
 MIIBCgKCAQEAp7nDFXU1vESrwPasI4NOwfh6gzwdbkwgqFf0VOm1OjyCubiLzfzE

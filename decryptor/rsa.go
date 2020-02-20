@@ -1,4 +1,4 @@
-package asdecryptor
+package decryptor
 
 import (
 	"crypto/rsa"
@@ -10,7 +10,7 @@ import (
 	"errors"
 )
 
-func Decrypt(encryptedData []byte, privatePemKey []byte) []byte{
+func RSA(encryptedData []byte, privatePemKey []byte) []byte{
 	key := parseRsaPrivateKeyFromPemStr(privatePemKey)
 	label := []byte("OAEP Encrypted")
 	data, err := rsa.DecryptOAEP(sha256.New(), rand.Reader, key, encryptedData, label)
