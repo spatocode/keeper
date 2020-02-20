@@ -18,7 +18,7 @@ func (app *Application) buildMenu() *fyne.MainMenu {
 	return fyne.NewMainMenu(
 		fyne.NewMenu("File",
 			fyne.NewMenuItem("Open", app.handleOpen),
-			fyne.NewMenuItem("Remove current", func() {}),
+			fyne.NewMenuItem("Remove current", app.handleRemove),
 		),
 		fyne.NewMenu("Edit",
 			fyne.NewMenuItem("Copy", func() {}),
@@ -30,6 +30,12 @@ func (app *Application) buildMenu() *fyne.MainMenu {
 			fyne.NewMenuItem("About", app.handleAbout),
 		),
 	)
+}
+
+func (app *Application) handleRemove() {
+	if app.currentFile != "No file selected" {
+		app.currentFile = "No file selected"
+	}
 }
 
 func (app *Application) handleOpen() {
