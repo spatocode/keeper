@@ -67,7 +67,7 @@ func (app *Application) handleEncryption() {
 	if app.currentFile != "No file selected" {
 		password := widget.NewPasswordEntry()
 		dialog.ShowCustomConfirm("Enter password", "Done", "Cancel", password, func(done bool) {
-			if done {
+			if done && password.Text != "" {
 				err := encryptor.Encrypt(app.currentFile, password.Text)
 				if err != nil {
 					err = errors.New("An error occured while encrypting file.")
