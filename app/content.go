@@ -10,7 +10,6 @@ import (
 	"fyne.io/fyne/dialog"
 	"github.com/spatocode/keeper/encryptor"
 	"github.com/spatocode/keeper/decryptor"
-	_"github.com/spatocode/keeper/icons"
 )
 
 func (app *Application) content() fyne.CanvasObject {
@@ -22,7 +21,7 @@ func (app *Application) content() fyne.CanvasObject {
 		widget.NewGroup(app.currentFile,
 			fyne.NewContainerWithLayout(layout.NewGridLayout(3),
 				widget.NewButtonWithIcon("Encrypt", theme.ConfirmIcon(), app.handleEncryption),
-				widget.NewButtonWithIcon("Property", theme.ContentCutIcon(), app.handleFileProperty),
+				widget.NewButtonWithIcon("Property", theme.InfoIcon(), app.handleFileProperty),
 				widget.NewButtonWithIcon("Decrypt", theme.CancelIcon(), app.handleDecryption),
 			),
 		),
