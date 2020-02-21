@@ -1,6 +1,7 @@
 package app
 
 import (
+	"os"
 	"errors"
 
 	"fyne.io/fyne"
@@ -68,6 +69,30 @@ func (app *Application) handleEncryption() {
 }
 
 func (app *Application) handleFileProperty() {
+	if app.currentFile == "No file selected" {
+		//return
+	}
+	info, err := os.Stat(app.currentFile)
+	if err != nil {
+		handleError("Cannot check file property.", app)
+	}
+
+	content := widget.NewVBox(
+		widget.NewHBox(
+			widget.NewLabel("Name: "),
+			widget.NewLabel(info.Name()),
+		),
+		widget.NewHBox(
+			widget.NewLabel("Size: "),
+			widget.NewLabel(string(info.Size())),
+		),
+		widget.NewHBox(
+			widget.NewLabel("Last modified: "),
+			widget.NewLabel(info.ModTime().String()),
+		),
+	)
+
+	dialog.ShowCustom("Property", " Ok ", content, app.window)
 }
 
 func handleAction(action func(string, string) error, app *Application) {
@@ -76,9 +101,13 @@ func handleAction(action func(string, string) error, app *Application) {
 		if done && password.Text != "" {
 			err := action(app.currentFile, password.Text)
 			if err != nil {
-				err = errors.New("An error occured while encrypting file.")
-				dialog.ShowError(err, app.window)
+				handleError("An error occured while encrypting file.", app)
 			}
 		}
 	}, app.window)
+}
+
+func handleError(msg string, app *Application) {
+	err := errors.New(msg)
+	dialog.ShowError(err, app.window)
 }
