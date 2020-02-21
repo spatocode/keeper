@@ -50,6 +50,9 @@ func (app *Application) buildEncryptedTab() fyne.Widget {
 }
 
 func (app *Application) handleDecryption() {
+	if app.currentFile == "No file selected" {
+		return
+	}
 	for _, file := range app.encryptedFiles {
 		if app.currentFile == file {
 			handleAction(decryptor.Decrypt, app)
@@ -58,9 +61,10 @@ func (app *Application) handleDecryption() {
 }
 
 func (app *Application) handleEncryption() {
-	if app.currentFile != "No file selected" {
-		handleAction(encryptor.Encrypt, app)
+	if app.currentFile == "No file selected" {
+		return
 	}
+	handleAction(encryptor.Encrypt, app)
 }
 
 func (app *Application) handleFileProperty() {
