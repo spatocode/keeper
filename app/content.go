@@ -53,30 +53,29 @@ func (app *Application) buildEncryptedTab() fyne.Widget {
 func (app *Application) handleDecryption() {
 	for _, file := range app.encryptedFiles {
 		if app.currentFile == file {
-			password := widget.NewPasswordEntry()
-			dialog.ShowCustomConfirm("Enter password", "Done", "Cancel", password, func(done bool) {
-				if done {
-					decryptor.Decrypt(app.currentFile, password.Text)
-				}
-			}, app.window)
+			handleAction(decryptor.Decrypt, app)
 		}
 	}
 }
 
 func (app *Application) handleEncryption() {
 	if app.currentFile != "No file selected" {
-		password := widget.NewPasswordEntry()
-		dialog.ShowCustomConfirm("Enter password", "Done", "Cancel", password, func(done bool) {
-			if done && password.Text != "" {
-				err := encryptor.Encrypt(app.currentFile, password.Text)
-				if err != nil {
-					err = errors.New("An error occured while encrypting file.")
-					dialog.ShowError(err, app.window)
-				}
-			}
-		}, app.window)
+		handleAction(encryptor.Encrypt, app)
 	}
 }
 
 func (app *Application) handleFileProperty() {
+}
+
+func handleAction(action func(string, string) error, app *Application) {
+	password := widget.NewPasswordEntry()
+	dialog.ShowCustomConfirm("Enter password", "Done", "Cancel", password, func(done bool) {
+		if done && password.Text != "" {
+			err := action(app.currentFile, password.Text)
+			if err != nil {
+				err = errors.New("An error occured while encrypting file.")
+				dialog.ShowError(err, app.window)
+			}
+		}
+	}, app.window)
 }
